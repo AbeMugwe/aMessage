@@ -1,0 +1,240 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f4f4f6;
+  color: #1a1a1a;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Topbar ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e4e4e7;
+  flex-shrink: 0;
+}
+.topbar-title  { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.topbar-status { font-size: 12px; color: #71717a; }
+.topbar-right  { display: flex; align-items: center; gap: 16px; }
+
+/* ── Toggles (Eve page only) ── */
+.toggle-group { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #52525b; cursor: pointer; user-select: none; }
+.toggle-pill  { width: 36px; height: 20px; border-radius: 20px; display: flex; align-items: center; padding: 3px; transition: background .2s; }
+.toggle-pill.on  { background: #534AB7; justify-content: flex-end; }
+.toggle-pill.off { background: #a1a1aa; justify-content: flex-start; }
+.toggle-thumb { width: 14px; height: 14px; border-radius: 50%; background: #fff; }
+
+/* ── Screen ── */
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Panel ── */
+.panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  min-width: 0;
+}
+
+.panel-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e4e4e7;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fafafa;
+  flex-shrink: 0;
+}
+
+/* Eve page header */
+.panel-header.eve-header { background: #FFF5F2; border-bottom-color: #F0997B; }
+
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600; flex-shrink: 0;
+}
+.avatar-alice { background: #EEEDFE; color: #3C3489; }
+.avatar-bob   { background: #E1F5EE; color: #0F6E56; }
+.avatar-eve   { background: #FAECE7; color: #993C1D; }
+
+.panel-name { font-size: 14px; font-weight: 600; }
+.panel-sub  { font-size: 11px; color: #71717a; margin-top: 1px; }
+
+/* ── Status bar ── */
+.status-bar {
+  display: flex; gap: 6px; align-items: center;
+  padding: 10px 16px 0; flex-wrap: wrap; flex-shrink: 0;
+}
+.tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+.tag-key       { background: #EEEDFE; color: #3C3489; }
+.tag-enc-on    { background: #E1F5EE; color: #085041; }
+.tag-enc-off   { background: #FCEBEB; color: #A32D2D; }
+.tag-auth-on   { background: #FAEEDA; color: #633806; }
+.tag-auth-off  { background: #FCEBEB; color: #A32D2D; }
+
+/* ── Chat area ── */
+.chat-area {
+  flex: 1; padding: 14px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+/* ── Bubbles ── */
+.bubble {
+  max-width: 78%; padding: 8px 12px; border-radius: 14px;
+  font-size: 13px; line-height: 1.5;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .25s, transform .25s;
+}
+.bubble.show { opacity: 1; transform: translateY(0); }
+
+.bubble-out-alice { align-self: flex-end; background: #534AB7; color: #fff; border-bottom-right-radius: 4px; }
+.bubble-out-bob   { align-self: flex-end; background: #1D9E75; color: #fff; border-bottom-right-radius: 4px; }
+.bubble-in-alice  { align-self: flex-start; background: #EEEDFE; color: #1a1a1a; border: 1px solid #d4d4f7; border-bottom-left-radius: 4px; }
+.bubble-in-bob    { align-self: flex-start; background: #E1F5EE; color: #1a1a1a; border: 1px solid #b6e8d4; border-bottom-left-radius: 4px; }
+.bubble-system    { align-self: flex-start; background: #f4f4f6; border: 1px solid #e4e4e7; font-style: italic; opacity: 0.75 !important; }
+.bubble-warn      { align-self: flex-start; background: #FCEBEB; color: #A32D2D; border: 1px solid #F09595; border-bottom-left-radius: 4px; }
+
+/* Eve intercept bubbles */
+.bubble-intercepted-plain  { align-self: flex-start; background: #FFF3CD; color: #633806; border: 1.5px dashed #D85A30; border-bottom-left-radius: 4px; }
+.bubble-intercepted-cipher { align-self: flex-start; background: #1E1E1C; color: #9FE1CB; border-bottom-left-radius: 4px; font-family: "SF Mono", Menlo, monospace; font-size: 11px; word-break: break-all; }
+.bubble-eve-out { align-self: flex-end; background: #D85A30; color: #fff; border-bottom-right-radius: 4px; }
+
+.bubble-time { font-size: 10px; opacity: 0.65; margin-top: 3px; }
+
+/* ── Input row ── */
+.input-row {
+  padding: 10px 12px; border-top: 1px solid #e4e4e7;
+  display: flex; gap: 8px; align-items: center; background: #fafafa; flex-shrink: 0;
+}
+.input-row.eve-input-row { background: #FFF5F2; border-top-color: #F0997B; }
+
+.msg-input {
+  flex: 1; border: 1px solid #d4d4d8; border-radius: 20px;
+  padding: 7px 14px; font-size: 13px; background: #fff; outline: none;
+}
+.msg-input:focus { border-color: #a1a1aa; }
+
+.send-btn {
+  width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0; color: #fff;
+  transition: transform .1s, opacity .1s;
+}
+.send-btn:active { transform: scale(0.92); }
+.send-btn-alice { background: #534AB7; }
+.send-btn-bob   { background: #1D9E75; }
+.send-btn-eve   { background: #D85A30; }
+.send-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ── Eve spoof section ── */
+.spoof-section {
+  padding: 10px 12px; border-top: 1px solid #F0997B;
+  background: #FFF5F2; flex-shrink: 0;
+}
+.spoof-label { font-size: 11px; font-weight: 600; color: #993C1D; margin-bottom: 6px; }
+.spoof-btns  { display: flex; gap: 8px; }
+.spoof-btn {
+  flex: 1; padding: 6px; border-radius: 8px; border: 1px solid #F0997B;
+  background: #fff; color: #993C1D; font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: background .15s;
+}
+.spoof-btn:hover    { background: #FAECE7; }
+.spoof-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ── Typing indicator ── */
+.typing {
+  display: flex; gap: 4px; align-items: center;
+  padding: 8px 12px; align-self: flex-start;
+  background: #f4f4f6; border-radius: 12px; border: 1px solid #e4e4e7;
+}
+.typing span {
+  width: 6px; height: 6px; border-radius: 50%; background: #a1a1aa;
+}
+.typing span:nth-child(1) { animation: dot 1.2s 0.0s infinite; }
+.typing span:nth-child(2) { animation: dot 1.2s 0.2s infinite; }
+.typing span:nth-child(3) { animation: dot 1.2s 0.4s infinite; }
+@keyframes dot { 0%,80%,100%{opacity:.2;transform:scale(1)} 40%{opacity:1;transform:scale(1.3)} }
+
+/* ── Flying packets ── */
+.packet {
+  position: fixed;
+  padding: 6px 12px; border-radius: 10px; font-size: 11px;
+  white-space: nowrap; max-width: 220px; overflow: hidden; text-overflow: ellipsis;
+  pointer-events: none; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  z-index: 9999; font-weight: 500; transform: translate(-50%, -50%);
+}
+.packet-enc {
+  background: #1E1E1C; color: #9FE1CB;
+  font-family: "SF Mono", Menlo, monospace;
+  border: 1.5px solid #1D9E75;
+}
+.packet-plain {
+  background: #FFF3CD; color: #633806;
+  border: 1.5px dashed #D85A30;
+}
+.packet-spoof {
+  background: #D85A30; color: #fff;
+  border: 1.5px solid #993C1D;
+}
+
+/* ── Mode banner (Alice/Bob pages) ── */
+.mode-banner {
+  padding: 6px 16px; font-size: 11px; font-weight: 500;
+  text-align: center; flex-shrink: 0;
+}
+.mode-banner.enc-on  { background: #E1F5EE; color: #085041; }
+.mode-banner.enc-off { background: #FCEBEB; color: #A32D2D; }
+
+/* ── Admin panel ── */
+.admin-card {
+  background: var(--surface, #fff);
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  padding: 16px;
+}
+.admin-card-title {
+  font-size: 12px; font-weight: 600; color: #52525b;
+  text-transform: uppercase; letter-spacing: .04em;
+  margin-bottom: 14px;
+}
+.admin-toggle-row {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 16px;
+}
+.admin-toggle-info { flex: 1; }
+.admin-toggle-label { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.admin-toggle-desc  { font-size: 12px; color: #71717a; line-height: 1.5; }
+.admin-divider { border: none; border-top: 1px solid #e4e4e7; margin: 14px 0; }
+
+.scenario-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.scenario-btn  {
+  padding: 12px; border-radius: 10px; border: 1.5px solid;
+  cursor: pointer; text-align: left; transition: opacity .15s;
+}
+.scenario-btn:hover { opacity: 0.85; }
+.scenario-btn-danger  { background: #FFF5F2; border-color: #F0997B; }
+.scenario-btn-success { background: #F0FDF8; border-color: #1D9E75; }
+.scenario-btn-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.scenario-btn-sub   { font-size: 11px; color: #71717a; line-height: 1.4; }
+
+/* Status summary rows */
+.status-summary { display: flex; flex-direction: column; gap: 10px; }
+.status-row { display: flex; align-items: flex-start; gap: 12px; }
+.status-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.status-row-label { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.status-row-value { font-size: 12px; }
+.value-good { color: #085041; }
+.value-bad  { color: #A32D2D; }

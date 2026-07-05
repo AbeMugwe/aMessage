@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Chat — Eve (MITM)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-title">⚠️ Eve — MITM Attacker</div>
+  <div class="topbar-status" id="status">Intercepting…</div>
+</div>
+
+<div id="mode-banner" class="mode-banner enc-on">🔒 Encryption ON · ✓ Auth ON</div>
+
+<div class="screen">
+  <div class="panel">
+    <div class="panel-header eve-header">
+      <div class="avatar avatar-eve">E</div>
+      <div>
+        <div class="panel-name" style="color:#712B13">Eve</div>
+        <div class="panel-sub">Passively intercepting — channel config set by Admin</div>
+      </div>
+    </div>
+    <div class="status-bar" id="status-bar"></div>
+    <div class="chat-area" id="chat"></div>
+
+    <!-- Eve's own message input -->
+    <div class="input-row eve-input-row">
+      <input class="msg-input" id="msg-input" placeholder="Eve's message to spoof…" />
+      <button class="send-btn send-btn-eve" onclick="eveSendOwn()">➤</button>
+    </div>
+
+    <!-- Spoof controls -->
+    <div class="spoof-section">
+      <div class="spoof-label">Spoof as:</div>
+      <div class="spoof-btns">
+        <button class="spoof-btn" id="spoof-alice" onclick="eveSpoof('alice')">👤 Alice → Bob</button>
+        <button class="spoof-btn" id="spoof-bob"   onclick="eveSpoof('bob')">👤 Bob → Alice</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script src="app-eve.js"></script>
+</body>
+</html>

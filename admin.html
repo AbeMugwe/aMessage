@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Chat — Admin Panel</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-title">⚙️ Channel Admin Panel</div>
+  <div class="topbar-status" id="status">Connected</div>
+</div>
+
+<div class="screen">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="avatar" style="background:#e4e4e7;color:#52525b;font-size:18px;">⚙️</div>
+      <div>
+        <div class="panel-name">Communication Channel Configuration</div>
+        <div class="panel-sub">Changes apply to Alice and Bob immediately</div>
+      </div>
+    </div>
+
+    <div class="chat-area" style="gap:16px; padding: 20px;">
+
+      <!-- Scenario quick-select -->
+      <div class="admin-card">
+        <div class="admin-card-title">Quick Scenarios</div>
+        <div class="scenario-btns">
+          <button class="scenario-btn scenario-btn-danger" onclick="applyScenario(false, false)">
+            <div class="scenario-btn-title">⚠️ Scenario A</div>
+            <div class="scenario-btn-sub">No encryption, no auth<br>Eve can see and spoof everything</div>
+          </button>
+          <button class="scenario-btn scenario-btn-success" onclick="applyScenario(true, true)">
+            <div class="scenario-btn-title">✅ Scenario B</div>
+            <div class="scenario-btn-sub">Encryption + Auth ON<br>Eve is completely blocked</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Individual toggles -->
+      <div class="admin-card">
+        <div class="admin-card-title">Manual Configuration</div>
+
+        <div class="admin-toggle-row">
+          <div class="admin-toggle-info">
+            <div class="admin-toggle-label">🔒 Encryption (AES-256)</div>
+            <div class="admin-toggle-desc">Encrypts message content in transit. Without this, Eve can read every message as plaintext.</div>
+          </div>
+          <div class="toggle-group" onclick="toggleMode('enc')">
+            <div class="toggle-pill on" id="pill-enc"><div class="toggle-thumb"></div></div>
+            <span id="label-enc" style="font-size:12px;min-width:28px">ON</span>
+          </div>
+        </div>
+
+        <div class="admin-divider"></div>
+
+        <div class="admin-toggle-row">
+          <div class="admin-toggle-info">
+            <div class="admin-toggle-label">✍️ Authentication (ECDSA)</div>
+            <div class="admin-toggle-desc">Signs every message with the sender's private key. Without this, Eve can impersonate Alice or Bob.</div>
+          </div>
+          <div class="toggle-group" onclick="toggleMode('auth')">
+            <div class="toggle-pill on" id="pill-auth"><div class="toggle-thumb"></div></div>
+            <span id="label-auth" style="font-size:12px;min-width:28px">ON</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live status -->
+      <div class="admin-card" id="status-card">
+        <div class="admin-card-title">Current Channel Status</div>
+        <div id="status-summary" class="status-summary"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script src="app-admin.js"></script>
+</body>
+</html>

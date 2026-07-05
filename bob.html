@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Chat — Bob</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-title">🔐 Secure Chat — Bob</div>
+  <div class="topbar-status" id="status">Initializing…</div>
+</div>
+
+<div id="mode-banner" class="mode-banner enc-on">🔒 Encryption ON · ✓ Auth ON</div>
+
+<div class="screen">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="avatar avatar-bob">B</div>
+      <div>
+        <div class="panel-name">Bob</div>
+        <div class="panel-sub" id="sub">Connecting…</div>
+      </div>
+    </div>
+    <div class="status-bar" id="status-bar"></div>
+    <div class="chat-area" id="chat"></div>
+    <div class="input-row">
+      <input class="msg-input" id="msg-input" placeholder="Type a message to Alice…" disabled />
+      <button class="send-btn send-btn-bob" id="send-btn" disabled>➤</button>
+    </div>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script src="app-bob.js"></script>
+</body>
+</html>
