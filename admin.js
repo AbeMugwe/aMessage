@@ -78,14 +78,32 @@ async function applyScenario(enc, auth) {
 }
 
 async function init() {
+  // Set to connecting immediately so it never stays as the HTML default
+  statusEl.textContent = 'Connecting…';
+  statusEl.style.color = '#71717a';
+
+  // Disable toggles and scenario buttons until backend confirms
+  setControlsDisabled(true);
+
   try {
     const mode = await API.getMode();
     currentMode = mode;
     updateUI(mode.encMode, mode.authMode);
-    statusEl.textContent = '✅ Connected to backend';
+    statusEl.textContent = '✅ Connected';
+    statusEl.style.color = '#085041';
+    setControlsDisabled(false);
   } catch(err) {
-    statusEl.textContent = '❌ Cannot reach backend';
+    statusEl.textContent = '❌ Cannot reach backend — is server.js running on port 3001?';
+    statusEl.style.color = '#A32D2D';
+    // Leave controls disabled so admin can't set a mode that won't be saved
   }
+}
+
+function setControlsDisabled(disabled) {
+  document.querySelectorAll('.scenario-btn, .toggle-group').forEach(el => {
+    el.style.opacity      = disabled ? '0.4' : '1';
+    el.style.pointerEvents = disabled ? 'none' : 'auto';
+  });
 }
 
 init();
